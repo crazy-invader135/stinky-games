@@ -43,40 +43,6 @@
       50% { text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #00f0ff, 0 0 60px #00f0ff; }
       100% { text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #00f0ff, 0 0 40px #00f0ff; }
     }
-
-    main {
-      margin-top: 40px;
-      width: 100%;
-      max-width: 800px;
-      color: #00f0ffcc;
-    }
-
-    main h2 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-      color: #0ff;
-      text-shadow: 0 0 5px #0ff;
-    }
-
-    .competition {
-      margin-bottom: 30px;
-    }
-
-    .ai-entry {
-      margin: 10px 0;
-      font-size: 1.1rem;
-    }
-
-    a {
-      color: #0ff;
-      text-decoration: underline;
-      cursor: pointer;
-    }
-
-    a:hover {
-      color: #00f0ff;
-      text-shadow: 0 0 5px #0ff;
-    }
   </style>
 </head>
 <body>
@@ -84,34 +50,6 @@
   <header>
     <h1>AI Slop Games and Junk</h1>
   </header>
-
-  <main>
-    <div class="competition">
-      <h2>Competition 1: Physics Simulator</h2>
-      
-      <div class="ai-entry">
-        AI 1: <a href="https://sites.google.com/view/ai-slop/chatgpt-phisics" class="redirect">HERE</a>  
-      </div>
-      
-      <div class="ai-entry">
-        AI 2: <a href="https://sites.google.com/view/ai-slop/grok-phisics" class="redirect">HERE</a>  
-      </div>
-    </div>
-  </main>
-
-  <script>
-    // Fade-out redirect effect
-    document.querySelectorAll('a.redirect').forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault(); // stop default jump
-        const url = this.href;
-        document.body.style.opacity = 0; // fade out
-        setTimeout(() => {
-          window.location.href = url; // redirect after fade
-        }, 500); // matches CSS transition duration
-      });
-    });
-  </script>
 
 </body>
 </html>
