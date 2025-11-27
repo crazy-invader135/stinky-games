@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit a game</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #000;
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      overflow: hidden; /* prevent scrollbars */
+      position: relative;
+    }
+
+    /* Particle background */
+    #bgCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    /* Top navigation bar */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background: #000;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0 20px;
+      box-shadow: 0 0 10px #ff0000;
+      z-index: 1000;
+      gap: 15px;
+    }
+
+    .top-bar button {
+      padding: 10px 18px;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: bold;
+      font-size: 1rem;
+      color: transparent;
+      border: 2px solid #ff4500;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #ff0000, #ff7f00);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: gradientMove 5s linear infinite;
+    }
+
+    .top-bar button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px #ff7f00, 0 0 30px #ff0000;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 200% 0%; }
+    }
+
+    /* Game wrapper & container */
+    .game-wrapper {
+  position: relative;
+  margin-top: 100px; /* <-- THIS WILL ALWAYS MOVE IT DOWN */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  height: calc(60% - 70px);
+}
+
+    .game-container {
+      width: 80vw;
+      height: auto;
+      aspect-ratio: 4 / 3; /* maintain original 480x360 ratio */
+      border: 3px solid #ff4500;
+      border-radius: 10px;
+      background: #111;
+      position: relative;
+      transition: all 0.5s ease;
+    }
+
+    .game-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Particle Background -->
+  <canvas id="bgCanvas"></canvas>
+
+  <!-- Top navigation bar -->
+  <div class="top-bar">
+    <button onclick="location.href='index.html'">Home</button>
+    <button onclick="location.href='game-search.html'">Games</button>
+  </div>
+
+  <!-- Game container -->
+  <div class="game-wrapper">
+    <div class="game-container" id="gameContainer">
+      <iframe id="gameFrame" src="https://forms.gle/n3aV7oN79XF3RhUm8" allowfullscreen></iframe>
+    </div>
+  </div>
+
+<script>
+// Particle background
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+let width = canvas.width = window.innerWidth;
+let height = canvas.height = window.innerHeight;
+
+const particles = [];
+const particleCount = 80;
+
+// Create particles
+for (let i = 0; i < particleCount; i++) {
+  particles.push({
+    x: Math.random() * width,
+    y: Math.random() * height,
+    vx: (Math.random() - 0.5) * 0.5,
+    vy: (Math.random() - 0.5) * 0.5,
+    size: Math.random() * 2 + 1
+  });
+}
+
+function animate() {
+  ctx.clearRect(0, 0, width, height);
+
+  // Draw lines between close particles
+  for (let i = 0; i < particleCount; i++) {
+    for (let j = i + 1; j < particleCount; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 100) {
+        ctx.strokeStyle = `rgba(255,127,0,${1 - dist/100})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+
+  // Draw particles
+  for (let p of particles) {
+    ctx.fillStyle = '#ff7f00';
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+    ctx.fill();
+
+    p.x += p.vx;
+    p.y += p.vy;
+
+    if (p.x < 0 || p.x > width) p.vx *= -1;
+    if (p.y < 0 || p.y > height) p.vy *= -1;
+  }
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+// Resize canvas on window resize
+window.addEventListener('resize', () => {
+  width = canvas.width = window.innerWidth;
+  height = canvas.height = window.innerHeight;
+});
+</script>
+
+</body>
+</html>
