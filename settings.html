@@ -89,6 +89,10 @@ body {
     transition: 0.2s;
 }
 
+.outline-button.active {
+    color: orange;
+}
+
 h1 {
     margin-top: 120px;
     text-align: center;
@@ -150,9 +154,11 @@ select {
 
 <canvas id="bgCanvas"></canvas>
 
+<!-- Top Navigation Bar -->
 <div class="top-bar">
     <button class="outline-button" onclick="location.href='index.html'">Home</button>
     <button class="outline-button" onclick="location.href='game-search.html'">Games</button>
+    <button class="outline-button active" onclick="location.href='settings.html'">Settings</button>
 </div>
 
 <h1>Settings</h1>
@@ -163,8 +169,9 @@ select {
         <span>Choose Favicon & Title</span>
         <select id="presetSelect">
             <option value="default">Default</option>
-            <option value="Home">Google clasroom cloak</option>
-            <option value="Newtab">New tab cloak</option>
+            <option value="GClasroom">Classroom cloak</option>
+            <option value="NewTab">New tab cloak</option>
+            <option value="custom">Custom</option>
         </select>
     </div>
 
@@ -198,8 +205,9 @@ function loadSetting(key, defaultValue){
 // -------------------------------
 const presets = {
     default: {title: "SGW", favicon: "https://files.catbox.moe/gk7zpy.png"},
-    Clasroom: {title: "Home", favicon: "https://files.catbox.moe/eg2nns.png"},
+    GClasroom: {title: "Home", favicon: "https://files.catbox.moe/eg2nns.png"},
     NewTab: {title: "New Tab", favicon: "https://files.catbox.moe/cdep29.png"},
+    custom: {title: "", favicon: ""},
 };
 
 // -------------------------------
